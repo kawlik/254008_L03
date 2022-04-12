@@ -154,7 +154,7 @@ namespace Parallelism
             long offset = (this.max - this.min) / numParallel;
 
             //  execute in parallel
-            Parallel.For(0, numParallel, i => primes[i] = Problem.GetPrimeNumbersInRange(i * offset, i < numParallel ? (i + 1) * offset - 1 : this.max));
+            Parallel.For(0, numParallel, i => primes[i] = Problem.GetPrimeNumbersInRange(i * offset, i + 1 < numParallel ? (i + 1) * offset - 1 : this.max));
 
             /*  stop
             /*   *   *   *   *   *   *   *   */
@@ -184,7 +184,7 @@ namespace Parallelism
             //  exec
             for (int i = 0; i < numTasks; i++)
             {
-                tasks[i] = Problem.GetPrimeNumbersInRangeAsync(i * offset, i < numTasks ? (i + 1) * offset - 1 : this.max);
+                tasks[i] = Problem.GetPrimeNumbersInRangeAsync(i * offset, i + 1 < numTasks ? (i + 1) * offset - 1 : this.max);
             }
 
             //  wait for result
@@ -223,7 +223,7 @@ namespace Parallelism
             {
                 int index = i;
 
-                threads[i] = new Thread(() => res.SetWork(index, Problem.GetPrimeNumbersInRange(index * offset, index < numThreads ? (index + 1) * offset - 1: this.max)));
+                threads[i] = new Thread(() => res.SetWork(index, Problem.GetPrimeNumbersInRange(index * offset, index + 1 < numThreads ? (index + 1) * offset - 1: this.max)));
             }
 
             //  start threads
